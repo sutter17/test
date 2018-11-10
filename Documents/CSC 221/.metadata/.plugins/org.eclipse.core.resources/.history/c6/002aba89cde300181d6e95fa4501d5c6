@@ -1,0 +1,26 @@
+
+public class HuffNode implements Comparable<HuffNode>{
+	int value;
+	int frequency;
+	HuffNode left;
+	HuffNode right;
+	
+	public HuffNode(int value, int frequency) {
+		this.value = value;
+		this.frequency = frequency;
+
+	}
+	public HuffNode(HuffNode left, HuffNode right) {
+		frequency = left.frequency + right.frequency;
+		this.left = left;
+		this.right = right;
+		value = -1;
+	}
+	public HuffNode(int value) {
+		value = this.value;
+	}
+	@Override
+	public int compareTo(HuffNode other) {
+		return this.frequency-other.frequency;
+	}
+}

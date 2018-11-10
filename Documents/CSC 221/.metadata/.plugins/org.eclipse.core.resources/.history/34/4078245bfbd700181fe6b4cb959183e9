@@ -1,0 +1,55 @@
+
+import java.util.*;
+
+/** ADD ME! */
+public class WordOnBoardFinder implements IWordOnBoardFinder {
+	
+	List<BoardCell> myList = new LinkedList<BoardCell>();
+	BoggleBoard board = null;
+	int size; 
+	
+	private boolean wordCheck(int row, int col, String word){
+		BoardCell position = new BoardCell(row,col);
+		if(myList.contains(position)){
+			return false;
+		}
+		if (word.length()==1){
+			return true;
+		}else {
+			for(int i = row - 1; i <= row + 1; i++) {
+				for(int j = col - 1; j <= col + 1; j++) {
+					if( i < 0 || j < 0 || i > size || j > size) {
+						return false;
+					}
+					if(word.substring(1,2)==board.getFace(i,j)){
+						myList.add(position);
+						return wordCheck(i,j,word.substring(1));
+						
+					}
+					if(board.getFace(i, j).toLowerCase()=="qu" && word.substring(1, 3)=="qu") {
+						myList.add(position);
+						return wordCheck(i,j,word.substring(2));
+					}
+				}
+			}
+		}return false;
+	}
+	
+    
+    public List<BoardCell> cellsForWord(BoggleBoard board, String word) {
+    	List<BoardCell> list = new ArrayList<BoardCell>();
+    	size = board.size();
+    	for(int i = 0; i < size; i++) {
+    		for(int j = 0; j < size; j++) {
+    			if (!wordCheck(i,j,word)) {
+    				list.clear();
+    			}else {
+    				return list;
+    			}
+    		}
+    	}return list;
+    }
+    
+    
+}
+

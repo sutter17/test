@@ -1,0 +1,25 @@
+
+public class HuffNode {
+	int value;
+	int frequency;
+	String code;
+	HuffNode left;
+	HuffNode right;
+	
+	public HuffNode(int value, int frequency) {
+		value = this.value;
+		frequency = this.frequency;
+	}
+	public HuffNode(HuffNode left, HuffNode right) {
+		frequency = left.frequency + right.frequency;
+		left.code = left.code + "0";
+		right.code = right.code + "1";
+		this.left = left;
+		this.right = right;
+		value = -1;
+	}
+	public HuffNode(int value, String code) {
+		value = this.value;
+		code = this.code;
+	}
+}

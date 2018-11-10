@@ -1,0 +1,50 @@
+import java.io.PrintStream;
+
+public class HuffmanTree {
+	HuffNode root;
+	public HuffmanTree(int[] count) {
+		HuffNode[] forest = new HuffNode[count.length];
+		for(int i = 0; i < count.length; i++) {
+			forest[i] = new HuffNode(i,count[i]); 
+		}
+		root = collect(forest);
+		
+	}
+	private void sort(HuffNode[] forest, int start) {
+		if(start == forest.length) {
+			return;
+		}
+		int n = start;
+		while(forest[n].frequency > forest[n-1].frequency) {
+			HuffNode temp = forest[n];
+			forest[n] = forest[n-1];
+			forest[n-1] = temp;
+		}
+		sort(forest, start + 1);
+	}
+	private HuffNode collect(HuffNode[] forest){
+		int n = 0;
+		while(forest[forest.length-2] != null) {
+			forest[n+1] = new HuffNode(forest[n] , forest[n+1]);
+			forest[n]= null;
+			n++;
+			sort(forest, n);
+		}
+		return forest[n];
+	}
+	public void write (PrintStream output) {
+		write(output,root);
+	}
+	public void write (PrintStream output, HuffNode root) {
+		if(root == null) {
+			return;
+		}
+		if(root.right == null && root.left == null) {
+			output.println(root.value);
+			output.println(root.code);
+			return;
+		}
+		write(output, root.left);
+		write(output, root.right);
+	}
+}
